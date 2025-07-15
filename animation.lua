@@ -14,3 +14,12 @@ function newAnimation(image, width, height, duration)
 
     return animation
 end
+
+function norm_speed(x, y, s)
+    len = math.sqrt(x * x + y * y)
+    if len ~= 0 and len ~= 1 then
+        x = x / (len / s)
+        y = y / (len / s)
+    end
+    return x,y
+end
