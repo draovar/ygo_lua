@@ -20,7 +20,7 @@ player =
     dy = 0,
     dir = DIR_UP,
     state = STATE_IDLE,
-    animation = newAnimation(love.graphics.newImage("yugi2.png"), 48, 64, 0.5)
+    animation = newAnimation(love.graphics.newImage("yamiyugi.png"), 48, 64, 0.5)
 }
 
 function player_update(dt)
