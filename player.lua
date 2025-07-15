@@ -11,17 +11,15 @@ STATE_IDLE = 0
 STATE_WALK = 1
 
 -- player class --
-player = 
-{
-    x = 0,
-    y = 0,
-    s = 2,
-    dx = 0,
-    dy = 0,
-    dir = DIR_UP,
-    state = STATE_IDLE,
-    animation = newAnimation(love.graphics.newImage("yamiyugi.png"), 48, 64, 0.5)
-}
+player = {}
+player.x = 0
+player.y = 0
+player.s = 2
+player.dx = 0
+player.dy = 0
+player.dir = DIR_UP
+player.state = STATE_IDLE
+player.animation = newAnimation(love.graphics.newImage("yamiyugi.png"), 48, 64, 1/player.s)
 
 function player_update(dt)
     -- reset
