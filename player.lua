@@ -30,6 +30,9 @@ function player_update(dt)
     -- input
     player_input()
     player.dx, player.dy = norm_speed(player.dx, player.dy, player.s)
+    player.dx = player.dx * dt*60
+    player.dy = player.dy * dt*60
+
     if player.dx ~= 0 or player.dy ~= 0 then
         player.state = STATE_WALK
         player.x = player.x + player.dx
