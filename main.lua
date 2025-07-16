@@ -1,13 +1,10 @@
 require "player";
 
 function love.load()
-    sti = require 'sti'
-    gameMap = sti('testMap.lua')
-
-    camera = require "camera";
+    sti = require 'libs/sti'
+    gameMap = sti('maps/testMap.lua')
+    camera = require "libs/camera";
     cam = camera()
-
-    kk_dt = 0
 end
 
 function love.draw()
@@ -20,13 +17,9 @@ function love.draw()
 
     -- debug
     love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 10, 10)
-    love.graphics.print("dt: "..tostring(kk_dt), 10, 30)
-    
 end
 
 function love.update(dt)
     player_update(dt)
     cam:lookAt(math.floor(player.x), math.floor(player.y))
-    love.graphics.print("dt: ", 10, 10)
-    kk_dt = dt
 end

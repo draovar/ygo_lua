@@ -19,7 +19,7 @@ player.dx = 0
 player.dy = 0
 player.dir = DIR_UP
 player.state = STATE_IDLE
-player.animation = newAnimation(love.graphics.newImage("yamiyugi.png"), 48, 64, 1/player.s)
+player.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/player.s)
 
 function player_update(dt)
     -- reset
@@ -74,9 +74,9 @@ function player_input()
     end
 
     if love.keyboard.isDown("x") then
-        player.animation = newAnimation(love.graphics.newImage("yamiyugi.png"), 48, 64, 1/player.s)
+        player.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/player.s)
     end
     if love.keyboard.isDown("z") then
-        player.animation = newAnimation(love.graphics.newImage("yugi.png"), 48, 64, 1/player.s)
+        player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
     end
 end
