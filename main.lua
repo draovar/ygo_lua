@@ -15,6 +15,10 @@ function love.draw()
         gameMap:drawLayer(gameMap.layers["objs"])
         player_draw()
     cam:detach()
+
+    -- debug
+    love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+    
 end
 
 function love.update(dt)

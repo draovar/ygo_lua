@@ -23,3 +23,17 @@ function norm_speed(x, y, s)
     end
     return x,y
 end
+
+function love.keypressed(key, scancode, isrepeat)
+   if key == "lshift" then
+        player.s = 4
+        player.animation.duration = 1/player.s
+   end
+end
+
+function love.keyreleased(key)
+   if key == "lshift" then
+      player.s = 2
+      player.animation.duration = 1/player.s
+   end
+end
