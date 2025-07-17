@@ -37,3 +37,39 @@ function love.keyreleased(key)
       player.animation.duration = 1/player.s
    end
 end
+
+function draw_background_objs()
+    for _, obj in ipairs(objectsLayer.objects) do
+        if obj.y + obj.height <= player.y + player.h/2 + 8 then
+            local draw_x = 1 + obj.x/TILE_SIZE
+            local draw_y = 1 + obj.y/TILE_SIZE
+            for i=0, obj.width/TILE_SIZE, 1 do
+                for j=0, obj.height/TILE_SIZE, 1 do
+                    local tile = objectsTiles.data[draw_y + j][draw_x + i] -- Y, X
+                    if tile then
+                        local tileset = gameMap.tilesets[tile.tileset]
+                        love.graphics.draw(tileset.image, tile.quad, obj.x + i*TILE_SIZE, obj.y + j*TILE_SIZE)
+                    end
+                end
+            end
+        end
+    end
+end
+
+function draw_foreground_objs()
+    for _, obj in ipairs(objectsLayer.objects) do
+        if obj.y + obj.height > player.y + player.h/2 + 8 then
+            local draw_x = 1 + obj.x/TILE_SIZE
+            local draw_y = 1 + obj.y/TILE_SIZE
+            for i=0, obj.width/TILE_SIZE, 1 do
+                for j=0, obj.height/TILE_SIZE, 1 do
+                    local tile = objectsTiles.data[draw_y + j][draw_x + i] -- Y, X
+                    if tile then
+                        local tileset = gameMap.tilesets[tile.tileset]
+                        love.graphics.draw(tileset.image, tile.quad, obj.x + i*TILE_SIZE, obj.y + j*TILE_SIZE)
+                    end
+                end
+            end
+        end
+    end
+end

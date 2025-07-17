@@ -1,53 +1,25 @@
 require "player";
 
+TILE_SIZE = 48
+
 function love.load()
+    camera = require "libs/camera";
+    cam = camera()
+
     sti = require 'libs/sti'
     gameMap = sti('maps/map1.lua')
-    camera = require "libs/camera";
+    groundLayer  = gameMap.layers["ground"]
     objectsLayer = gameMap.layers["objects"]
-    cam = camera()
+    objectsTiles = gameMap.layers["objects_tiles"]
 end
 
 function love.draw()
     love.graphics.clear({0.5, 0.5, 1, 1})
     cam:attach()
-        gameMap:drawLayer(gameMap.layers["ground"])
-
-        for _, obj in ipairs(objectsLayer.objects) do
-            if obj.y + obj.height < player.y + 32 then
-                local draw_x = 1 + obj.x/48
-                local draw_y = 1 + obj.y/48
-                local layer = gameMap.layers["objects_tiles"]
-                for i=0, obj.width/48, 1 do
-                    for j=0, obj.height/48, 1 do
-                        local tile = layer.data[draw_y + j][draw_x + i] -- Y, X
-                        if tile then
-                            local tileset = gameMap.tilesets[tile.tileset]
-                            love.graphics.draw(tileset.image, tile.quad, obj.x + i*48, obj.y + j*48)
-                        end
-                    end
-                end
-            end
-        end
-
+        gameMap:drawLayer(groundLayer)
+        draw_background_objs()
         player_draw()
-
-        for _, obj in ipairs(objectsLayer.objects) do
-            if obj.y + obj.height > player.y + 32 then
-                local draw_x = 1 + obj.x/48
-                local draw_y = 1 + obj.y/48
-                local layer = gameMap.layers["objects_tiles"]
-                for i=0, obj.width/48, 1 do
-                    for j=0, obj.height/48, 1 do
-                        local tile = layer.data[draw_y + j][draw_x + i] -- Y, X
-                        if tile then
-                            local tileset = gameMap.tilesets[tile.tileset]
-                            love.graphics.draw(tileset.image, tile.quad, obj.x + i*48, obj.y + j*48)
-                        end
-                    end
-                end
-            end
-        end
+        draw_foreground_objs()
     cam:detach()
 
     -- debug
