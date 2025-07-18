@@ -21,6 +21,7 @@ function love.draw()
         draw_background_objs()
         player_draw()
         draw_foreground_objs()
+        player_outline()
     cam:detach()
 
     -- debug

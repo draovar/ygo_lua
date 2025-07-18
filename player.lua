@@ -21,7 +21,9 @@ player.dx = 0
 player.dy = 0
 player.dir = DIR_UP
 player.state = STATE_IDLE
-player.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/player.s)
+player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
+player.outline   = newAnimation(love.graphics.newImage("sprites/yugi_outline3.png"), 48, 64, 1/player.s)
+
 
 function player_update(dt)
     -- reset
@@ -40,6 +42,7 @@ function player_update(dt)
     if player.animation.currentTime >= player.animation.duration then
         player.animation.currentTime = player.animation.currentTime - player.animation.duration
     end
+    player.outline.currentTime = player.animation.currentTime
 end
 
 function player_draw()
@@ -51,12 +54,21 @@ function player_draw()
     end
 
     -- debug
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.points(player.x + player.w/4, player.y + player.h/4) -- top right
-    love.graphics.points(player.x - player.w/4, player.y + player.h/4) -- top left
-    love.graphics.points(player.x + player.w/4, player.y + player.h/2) -- bot right
-    love.graphics.points(player.x - player.w/4, player.y + player.h/2) -- bot left
-    love.graphics.setColor(1, 1, 1)
+    -- love.graphics.setColor(1, 0, 0)
+    -- love.graphics.points(player.x + player.w/4, player.y + player.h/4) -- top right
+    -- love.graphics.points(player.x - player.w/4, player.y + player.h/4) -- top left
+    -- love.graphics.points(player.x + player.w/4, player.y + player.h/2) -- bot right
+    -- love.graphics.points(player.x - player.w/4, player.y + player.h/2) -- bot left
+    -- love.graphics.setColor(1, 1, 1)
+end
+
+function player_outline()
+    if player.state == STATE_WALK then
+        local spriteNum = math.floor(player.animation.currentTime / player.animation.duration * 2 ) + 1
+        love.graphics.draw(player.outline.spriteSheet, player.animation.quads[spriteNum + 3*player.dir + 1], math.floor(player.x), math.floor(player.y), 0, 1, 1, 24, 32)
+    else
+        love.graphics.draw(player.outline.spriteSheet, player.animation.quads[1 + 3*player.dir], math.floor(player.x), math.floor(player.y), 0, 1, 1, 24, 32)
+    end
 end
 
 function player_move()
