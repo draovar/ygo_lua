@@ -8,9 +8,10 @@ function love.load()
 
     sti = require 'libs/sti'
     gameMap = sti('maps/map1.lua')
-    groundLayer  = gameMap.layers["ground"]
-    objectsLayer = gameMap.layers["objects"]
-    objectsTiles = gameMap.layers["objects_tiles"]
+    groundLayer     = gameMap.layers["ground"]
+    objectsLayer    = gameMap.layers["objects"]
+    objectsTiles    = gameMap.layers["objects_tiles"]
+    collisionsLayer = gameMap.layers["collisions"]
 end
 
 function love.draw()
@@ -29,5 +30,12 @@ end
 
 function love.update(dt)
     player_update(dt)
+
+    for _, obj in ipairs(collisionsLayer.objects) do
+        player_collision(obj)
+    end
+
+    player_move()
+
     cam:lookAt(math.floor(player.x), math.floor(player.y))
 end

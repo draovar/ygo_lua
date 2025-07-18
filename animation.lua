@@ -73,3 +73,34 @@ function draw_foreground_objs()
         end
     end
 end
+
+function pointInEllipse(px, py, ex, ey, ew, eh)
+  -- center of the ellipse
+  local cx = ex + ew * 0.5
+  local cy = ey + eh * 0.5
+  -- radii
+  local a = ew * 0.5
+  local b = eh * 0.5
+  -- vector from center to point
+  local dx = px - cx
+  local dy = py - cy
+  -- standard ellipse equation: (x/a)^2 + (y/b)^2 <= 1
+  return (dx*dx)/(a*a) + (dy*dy)/(b*b) <= 1
+end
+
+function pointInRect(px, py, rx, ry, rw, rh)
+  return px >= rx
+     and px <= rx + rw
+     and py >= ry
+     and py <= ry + rh
+end
+
+function checkCollision(t, px, py, ox, oy, ow, oh)
+    res = 0
+    if t == "ellipse" then
+        res = pointInEllipse(px, py, ox, oy, ow, oh)
+    elseif t == "rectangle" then
+        res = pointInRect(px, py, ox, oy, ow, oh)
+    end
+    return res
+end

@@ -35,12 +35,6 @@ function player_update(dt)
     player.dx = player.dx * dt*60
     player.dy = player.dy * dt*60
 
-    if player.dx ~= 0 or player.dy ~= 0 then
-        player.state = STATE_WALK
-        player.x = player.x + player.dx
-        player.y = player.y + player.dy
-    end
-
     -- animation update
     player.animation.currentTime = player.animation.currentTime + dt
     if player.animation.currentTime >= player.animation.duration then
@@ -54,6 +48,22 @@ function player_draw()
         love.graphics.draw(player.animation.spriteSheet, player.animation.quads[spriteNum + 3*player.dir + 1], math.floor(player.x), math.floor(player.y), 0, 1, 1, 24, 32)
     else
         love.graphics.draw(player.animation.spriteSheet, player.animation.quads[1 + 3*player.dir], math.floor(player.x), math.floor(player.y), 0, 1, 1, 24, 32)
+    end
+
+    -- debug
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.points(player.x + player.w/4, player.y + player.h/4) -- top right
+    love.graphics.points(player.x - player.w/4, player.y + player.h/4) -- top left
+    love.graphics.points(player.x + player.w/4, player.y + player.h/2) -- bot right
+    love.graphics.points(player.x - player.w/4, player.y + player.h/2) -- bot left
+    love.graphics.setColor(1, 1, 1)
+end
+
+function player_move()
+    if player.dx ~= 0 or player.dy ~= 0 then
+        player.state = STATE_WALK
+        player.x = player.x + player.dx
+        player.y = player.y + player.dy
     end
 end
 
@@ -80,5 +90,35 @@ function player_input()
     end
     if love.keyboard.isDown("z") then
         player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
+    end
+end
+
+function player_collision(obj)
+    if not obj then
+        return  
+    end
+
+    if player.dx > 0 then
+        if checkCollision(obj.shape, player.x + player.w/4 + player.s, player.y + player.h/4, obj.x, obj.y, obj.width, obj.height) or
+        checkCollision(obj.shape, player.x + player.w/4 + player.s, player.y + player.h/2, obj.x, obj.y, obj.width, obj.height) then
+            player.dx = 0
+        end
+    elseif player.dx < 0 then
+        if checkCollision(obj.shape, player.x - player.w/4 - player.s, player.y + player.h/4, obj.x, obj.y, obj.width, obj.height) or
+        checkCollision(obj.shape, player.x - player.w/4 - player.s, player.y + player.h/2, obj.x, obj.y, obj.width, obj.height) then
+            player.dx = 0
+        end
+    end
+
+    if player.dy > 0 then
+        if checkCollision(obj.shape, player.x + player.w/4, player.y + player.h/2 + player.s, obj.x, obj.y, obj.width, obj.height) or 
+        checkCollision(obj.shape, player.x - player.w/4, player.y + player.h/2 + player.s, obj.x, obj.y, obj.width, obj.height) then
+            player.dy = 0
+        end
+    elseif player.dy < 0 then
+        if checkCollision(obj.shape, player.x + player.w/4, player.y + player.h/4 - player.s, obj.x, obj.y, obj.width, obj.height) or 
+        checkCollision(obj.shape, player.x - player.w/4, player.y + player.h/4 - player.s, obj.x, obj.y, obj.width, obj.height) then
+            player.dy = 0
+        end
     end
 end
