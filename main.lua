@@ -12,6 +12,17 @@ function love.load()
     objectsLayer    = gameMap.layers["objects"]
     objectsTiles    = gameMap.layers["objects_tiles"]
     collisionsLayer = gameMap.layers["collisions"]
+    objects = {}
+    for _, obj in ipairs(objectsLayer.objects) do
+        table.insert(objects, obj)
+    end
+
+    -- debug
+    print("id", "x", "y", "width", "height")
+    for i, obj in ipairs(objects) do
+        print(objects[i].id, objects[i].x, objects[i].y, objects[i].width, objects[i].height)
+    end
+    print("Number objs:", #objects)
 end
 
 function love.draw()
