@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="48" tileheight="48" infinite="0" nextlayerid="9" nextobjectid="49">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="48" tileheight="48" infinite="0" nextlayerid="9" nextobjectid="57">
  <editorsettings>
   <export target="map1.lua" format="lua"/>
  </editorsettings>
@@ -47,6 +47,7 @@
   <object id="40" x="960" y="960" width="96" height="144"/>
   <object id="43" x="528" y="0" width="96" height="144"/>
   <object id="46" x="960" y="1248" width="96" height="144"/>
+  <object id="54" x="480" y="240" width="96" height="192"/>
  </objectgroup>
  <layer id="7" name="objects_tiles" width="30" height="30">
   <data encoding="csv">
@@ -55,10 +56,10 @@
 0,0,121,122,0,0,0,0,0,0,0,214,215,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,137,138,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,153,154,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,189,190,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,205,206,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,191,192,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,207,208,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,189,190,0,0,0,0,0,0,0,223,224,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,205,206,0,0,0,0,0,0,0,239,240,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,118,119,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,134,135,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,150,151,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -93,19 +94,13 @@
   <object id="41" x="960" y="1056" width="96" height="48">
    <ellipse/>
   </object>
-  <object id="42" x="1200" y="1584">
-   <ellipse/>
-  </object>
   <object id="44" x="528" y="96" width="96" height="48">
-   <ellipse/>
-  </object>
-  <object id="45" x="816" y="192">
    <ellipse/>
   </object>
   <object id="47" x="960" y="1344" width="96" height="48">
    <ellipse/>
   </object>
-  <object id="48" x="1152" y="1248">
+  <object id="56" x="528" y="384" width="48" height="48">
    <ellipse/>
   </object>
  </objectgroup>

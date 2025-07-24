@@ -65,6 +65,7 @@ function draw_foreground_objs()
         if objects[index].y + objects[index].height > player.y + player.h/2 + 8 then
             local draw_x = 1 + objects[index].x/TILE_SIZE
             local draw_y = 1 + objects[index].y/TILE_SIZE
+            -- draw object
             for i=0, objects[index].width/TILE_SIZE do
                 for j=0, objects[index].height/TILE_SIZE do
                     local tile = objectsTiles.data[draw_y + j][draw_x + i] -- Y, X
@@ -74,6 +75,16 @@ function draw_foreground_objs()
                     end
                 end
             end
+            -- draw outline if needed
+            if objects[index].height>96 then
+                if  pointInRect(player.x + 24, player.y + 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) or 
+                    pointInRect(player.x + 24, player.y - 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) or
+                    pointInRect(player.x - 24, player.y + 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) or
+                    pointInRect(player.x - 24, player.y - 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) then
+                        player_outline()
+                end
+            end
+            
         end
     end
 end
