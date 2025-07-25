@@ -71,5 +71,11 @@ function love.update(dt)
 
     player_move()
 
+    -- camera
     cam:lookAt(math.floor(player.x), math.floor(player.y))
+    local w, h = 400, 300
+    cam.x = math.max(cam.x, 0 + w)
+    cam.x = math.min(cam.x, 30*TILE_SIZE - w)
+    cam.y = math.max(cam.y, 0 + h)
+    cam.y = math.min(cam.y, 30*TILE_SIZE - h)
 end
