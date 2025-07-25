@@ -134,3 +134,7 @@ function player_collision(obj)
         end
     end
 end
+
+function player_checkInteractions()
+
+end
