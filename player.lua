@@ -22,7 +22,7 @@ player.dy = 0
 player.dir = DIR_UP
 player.state = STATE_IDLE
 player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
-player.outline   = newAnimation(love.graphics.newImage("sprites/yugi_outline3.png"), 48, 64, 1/player.s)
+player.outline   = newAnimation(love.graphics.newImage("sprites/yugi_outline.png"), 48, 64, 1/player.s)
 
 
 function player_update(dt)
