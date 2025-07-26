@@ -1,4 +1,5 @@
-bg_index = 0;
+bg_index = 1;
+bg_index2 = 1;
 
 function newAnimation(image, width, height, duration)
     local animation = {}
@@ -46,14 +47,34 @@ function draw_background_objs()
             bg_index = index
             break
         end
-        local draw_x = 1 + objects[index].x/TILE_SIZE
-        local draw_y = 1 + objects[index].y/TILE_SIZE
-        for i=0, objects[index].width/TILE_SIZE do
-            for j=0, objects[index].height/TILE_SIZE do
+        local draw_x = objects[index].x/TILE_SIZE
+        local draw_y = objects[index].y/TILE_SIZE
+        for i=1, objects[index].width/TILE_SIZE do
+            for j=1, objects[index].height/TILE_SIZE do
                 local tile = objectsTiles.data[draw_y + j][draw_x + i] -- Y, X
                 if tile then
                     local tileset = gameMap.tilesets[tile.tileset]
-                    love.graphics.draw(tileset.image, tile.quad, objects[index].x + i*TILE_SIZE, objects[index].y + j*TILE_SIZE)
+                    love.graphics.draw(tileset.image, tile.quad, objects[index].x + (i-1)*TILE_SIZE, objects[index].y + (j-1)*TILE_SIZE)
+                end
+            end
+        end
+    end
+end
+
+function draw_background_objs2()
+    for index = 1, #objects2 do
+        if objects2[index].y + objects2[index].height > player.y + player.h/2 + 8 then
+            bg_index2 = index
+            break
+        end
+        local draw_x = objects2[index].x/TILE_SIZE
+        local draw_y = objects2[index].y/TILE_SIZE
+        for i=1, objects2[index].width/TILE_SIZE do
+            for j=1, objects2[index].height/TILE_SIZE do
+                local tile = objectsTiles2.data[draw_y + j][draw_x + i] -- Y, X
+                if tile then
+                    local tileset = gameMap.tilesets[tile.tileset]
+                    love.graphics.draw(tileset.image, tile.quad, objects2[index].x + (i-1)*TILE_SIZE, objects2[index].y + (j-1)*TILE_SIZE)
                 end
             end
         end
@@ -63,15 +84,15 @@ end
 function draw_foreground_objs()
     for index = bg_index, #objects do
         if objects[index].y + objects[index].height > player.y + player.h/2 + 8 then
-            local draw_x = 1 + objects[index].x/TILE_SIZE
-            local draw_y = 1 + objects[index].y/TILE_SIZE
+            local draw_x = objects[index].x/TILE_SIZE
+            local draw_y = objects[index].y/TILE_SIZE
             -- draw object
-            for i=0, objects[index].width/TILE_SIZE do
-                for j=0, objects[index].height/TILE_SIZE do
+            for i=1, objects[index].width/TILE_SIZE do
+                for j=1, objects[index].height/TILE_SIZE do
                     local tile = objectsTiles.data[draw_y + j][draw_x + i] -- Y, X
                     if tile then
                         local tileset = gameMap.tilesets[tile.tileset]
-                        love.graphics.draw(tileset.image, tile.quad, objects[index].x + i*TILE_SIZE, objects[index].y + j*TILE_SIZE)
+                        love.graphics.draw(tileset.image, tile.quad, objects[index].x + (i-1)*TILE_SIZE, objects[index].y + (j-1)*TILE_SIZE)
                     end
                 end
             end
@@ -81,6 +102,36 @@ function draw_foreground_objs()
                     pointInRect(player.x + 24, player.y - 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) or
                     pointInRect(player.x - 24, player.y + 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) or
                     pointInRect(player.x - 24, player.y - 32, objects[index].x, objects[index].y, objects[index].width, objects[index].height) then
+                        player_outline()
+                end
+            end
+            
+        end
+    end
+end
+
+
+function draw_foreground_objs2()
+    for index = bg_index2, #objects2 do
+        if objects2[index].y + objects2[index].height > player.y + player.h/2 + 8 then
+            local draw_x = objects2[index].x/TILE_SIZE
+            local draw_y = objects2[index].y/TILE_SIZE
+            -- draw object
+            for i=1, objects2[index].width/TILE_SIZE do
+                for j=1, objects2[index].height/TILE_SIZE do
+                    local tile = objectsTiles2.data[draw_y + j][draw_x + i] -- Y, X
+                    if tile then
+                        local tileset = gameMap.tilesets[tile.tileset]
+                        love.graphics.draw(tileset.image, tile.quad, objects2[index].x + (i-1)*TILE_SIZE, objects2[index].y + (j-1)*TILE_SIZE)
+                    end
+                end
+            end
+            -- draw outline if needed
+            if objects2[index].height>96 then
+                if  pointInRect(player.x + 24, player.y + 32, objects2[index].x, objects2[index].y, objects2[index].width, objects2[index].height) or 
+                    pointInRect(player.x + 24, player.y - 32, objects2[index].x, objects2[index].y, objects2[index].width, objects2[index].height) or
+                    pointInRect(player.x - 24, player.y + 32, objects2[index].x, objects2[index].y, objects2[index].width, objects2[index].height) or
+                    pointInRect(player.x - 24, player.y - 32, objects2[index].x, objects2[index].y, objects2[index].width, objects2[index].height) then
                         player_outline()
                 end
             end

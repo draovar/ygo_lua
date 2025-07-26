@@ -12,8 +12,8 @@ STATE_WALK = 1
 
 -- player class --
 player = {}
-player.x = 64
-player.y = 64
+player.x = 30
+player.y = 200
 player.w = 48
 player.h = 64
 player.s = 2
