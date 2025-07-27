@@ -9,8 +9,8 @@ return {
   height = 40,
   tilewidth = 48,
   tileheight = 48,
-  nextlayerid = 12,
-  nextobjectid = 263,
+  nextlayerid = 13,
+  nextobjectid = 266,
   properties = {},
   tilesets = {
     {
@@ -1998,6 +1998,48 @@ return {
           y = 1680,
           width = 240,
           height = 240,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 12,
+      name = "npcs",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 263,
+          name = "bonz",
+          type = "",
+          shape = "rectangle",
+          x = 672,
+          y = 576,
+          width = 48,
+          height = 48,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 264,
+          name = "yamiyugi",
+          type = "",
+          shape = "rectangle",
+          x = 1488,
+          y = 912,
+          width = 48,
+          height = 48,
           rotation = 0,
           visible = true,
           properties = {}

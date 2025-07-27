@@ -32,6 +32,10 @@ function love.keypressed(key, scancode, isrepeat)
         player.s = 4
         player.animation.duration = 1/player.s
    end
+
+    if player.focus then
+        player.focus.keypressed(key)
+    end
 end
 
 function love.keyreleased(key)
@@ -169,4 +173,14 @@ function checkCollision(t, px, py, ox, oy, ow, oh)
         res = pointInRect(px, py, ox, oy, ow, oh)
     end
     return res
+end
+
+function safeRequire(module)
+    local ok, result = pcall(require, module)
+    if ok then
+        return result
+    else
+        print("Warning: Failed to load module '" .. module)
+        return nil
+    end
 end
