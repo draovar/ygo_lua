@@ -34,7 +34,7 @@ function love.keypressed(key, scancode, isrepeat)
    end
 
     if player.focus then
-        player.focus.keypressed(key)
+        NPCs_keypressed(player.focus, key)
     end
 end
 

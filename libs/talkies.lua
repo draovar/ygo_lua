@@ -129,7 +129,7 @@ local Talkies = {
   titleBackgroundColor    = nil,
   titleBorderColor        = nil,
   messageColor            = {1, 1, 1},
-  messageBackgroundColor  = {0, 0, 0, 0.8},
+  messageBackgroundColor  = {0, 0, 0, 0.7},
   messageBorderColor      = nil,
   
   rounding                = 0,

@@ -14,8 +14,9 @@ function NPCs_load()
     for _, obj in ipairs(npcLayer.objects) do
         npc = safeRequire("npcs/"..obj.name)
         if npc ~= nil then
-            npc.x = obj.x
-            npc.y = obj.y
+            npc.x = obj.x + TILE_SIZE / 2
+            npc.y = obj.y --+ TILE_SIZE / 2
+            npc.load()
             table.insert(npcTable, npc)
         end
     end
@@ -32,7 +33,12 @@ function NPCs_draw()
     for i, npc in ipairs(npcTable) do
         npc.draw()
         if pointInRect(npc.x, npc.y, player.x - TILE_SIZE*2, player.y - TILE_SIZE*2, TILE_SIZE*4, TILE_SIZE*4) then
+            
+            love.graphics.setColor(0,0,0,0.6)
+            love.graphics.rectangle("fill", npc.x - TILE_SIZE - 4, npc.y - TILE_SIZE, 104, 16)
+            love.graphics.setColor(1,1,1,1)
             love.graphics.print("Press X to talk...",npc.x - TILE_SIZE, npc.y - TILE_SIZE)
+            
             player.focus = npc
             if love.keyboard.isDown("x") then
                 npc.init_dialog()
@@ -44,5 +50,14 @@ end
 function NPCs_interaction()
     for i, npc in ipairs(npcTable) do
         npc.interactions()
+    end
+end
+
+function NPCs_keypressed(npc, key)
+    if npc.talkies ~= nil then
+        if key == "space" then npc.talkies.onAction()
+        elseif key == "up" then npc.talkies.prevOption()
+        elseif key == "down" then npc.talkies.nextOption()
+        end
     end
 end

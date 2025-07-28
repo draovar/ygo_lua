@@ -67,6 +67,9 @@ function game_update(dt)
     for _, obj in ipairs(collisionsLayer.objects) do
         player_collision(obj)
     end
+    for i, npc in ipairs(npcTable) do
+        player_collision(npc.collisions)
+    end
     player_move()
 
     -- camera

@@ -2,7 +2,7 @@ require "../animation"
 
 -- NPC data
 local npc = {}
-npc.name = "Bonz"
+npc.name = "Yami Yugi"
 npc.x = 0
 npc.y = 0
 npc.dir = 1
@@ -12,16 +12,14 @@ npc.talkies = require('../libs/talkies')
 npc.collisions = {}
 
 npc.dialogs = {
-    "Hello...",
-    "My name is Kiko and i am testing something..",
-    "Do you want to help me? \n",
+    "You are not ready yet..",
+    "Come to me later!\n",
 }
 npc.options = {
-    { "Yes", function() npc.talkies.say("Player", "Sure, I'm glad I can help.") game_state = RUNING end },
-    { "No",  function() npc.talkies.say("Player", "No, I can't right now.") game_state = RUNING end },
+    { "Bye", function() game_state = RUNING end },
 }
 
-npc.animation = newAnimation(love.graphics.newImage("sprites/bonz.png"), 48, 64, 1/2)
+npc.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/2)
 
 local function load()
     npc.collisions.shape = "rectangle"
