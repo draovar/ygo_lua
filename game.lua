@@ -7,12 +7,12 @@ RUNING = 0
 INTERACT = 1
 game_state = RUNING
 
-function game_load()
+function game_load(map)
     require "npc"
     camera = require "libs/camera";
     cam = camera()
     sti = require 'libs/sti'
-    gameMap = sti('maps/map2.lua')
+    gameMap = sti(map)
     groundLayer     = gameMap.layers["ground"]
     decorsLayer     = gameMap.layers["decors"]
     decorsLayer2    = gameMap.layers["decors2"]
@@ -86,4 +86,12 @@ function game_update(dt)
     cam.x = math.min(cam.x, 40*TILE_SIZE - w)
     cam.y = math.max(cam.y, 0 + h)
     cam.y = math.min(cam.y, 40*TILE_SIZE - h)
+
+    if player.x < 0 then
+        player.x = 1920
+        load_map('maps/map1.lua')
+    elseif player.x > 1920 then
+        player.x = 0
+        load_map('maps/map2.lua')
+    end
 end

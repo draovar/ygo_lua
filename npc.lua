@@ -8,8 +8,8 @@ STATE_IDLE = 0
 STATE_WALK = 1
 
 
-npcTable = {}
 function NPCs_load()
+    npcTable = {}
     npcLayer = gameMap.layers["npcs"]
     for _, obj in ipairs(npcLayer.objects) do
         npc = safeRequire("npcs/"..obj.name)
