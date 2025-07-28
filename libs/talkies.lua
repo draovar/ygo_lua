@@ -132,11 +132,11 @@ local Talkies = {
   messageBackgroundColor  = {0, 0, 0, 0.7},
   messageBorderColor      = nil,
   
-  rounding                = 0,
+  rounding                = 8,
   thickness               = 0,
   
   textSpeed               = 1 / 60,
-  font                    = love.graphics.newFont(),
+  font                    = fonts.dialog,
 
   typedNotTalked          = true,
   pitchValues             = {0.7, 0.8, 1.0, 1.2, 1.3},
@@ -298,7 +298,8 @@ function Talkies.draw()
     local titleBoxW = currentDialog.font:getWidth(currentDialog.title)+(2*currentDialog.padding)
     local titleBoxH = currentDialog.fontHeight+currentDialog.padding
     local titleBoxY = boxY-titleBoxH-(currentDialog.padding/2)
-    local titleX, titleY = boxX + currentDialog.padding, titleBoxY + 2
+    local titleX, titleY = boxX + currentDialog.padding, titleBoxY + currentDialog.padding - 4
+    -- local titleX, titleY = boxX + currentDialog.padding, titleBoxY + 2
     
     -- Message title
     love.graphics.setColor(currentDialog.titleBackgroundColor)
@@ -353,7 +354,8 @@ function Talkies.draw()
   -- Message options (when shown)
   if currentDialog:showOptions() and currentMessage.complete then
     if currentDialog.inlineOptions then
-      local optionsY = textY + currentDialog.font:getHeight() * #modmsg
+      --local optionsY = textY + currentDialog.font:getHeight() * #modmsg
+      local optionsY = boxH + boxY - 4 - currentDialog.padding - currentDialog.font:getHeight() * #currentDialog.options
       local optionLeftPad = currentDialog.font:getWidth(currentDialog.optionCharacter.." ")
       for k, option in pairs(currentDialog.options) do
         love.graphics.print(option[1], optionLeftPad+textX+currentDialog.padding, optionsY+((k-1)*currentDialog.fontHeight))
@@ -397,6 +399,7 @@ function Talkies.draw()
   love.graphics.pop()
 
   -- Reset color so other draw operations won't be affected
+  love.graphics.setFont(fonts.default)
   love.graphics.setColor(1, 1, 1, 1)
 end
 

@@ -9,6 +9,7 @@ npc.dir = 1
 npc.w = 48
 npc.h = 64
 npc.talkies = require('../libs/talkies')
+npc.image = love.graphics.newImage("sprites/yugi_img.png")
 npc.collisions = {}
 
 npc.dialogs = {
@@ -22,7 +23,7 @@ npc.options = {
 npc.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/2)
 
 local function load()
-    npc.collisions.shape = "rectangle"
+    npc.collisions.shape = "ellipse"
     npc.collisions.width = 48
     npc.collisions.height = 48
     npc.collisions.x = npc.x - npc.w/2
@@ -45,7 +46,7 @@ end
 
 local function init_dialog()
   if not npc.talkies:isOpen() then
-    npc.talkies.say(npc.name, npc.dialogs, {options = npc.options})
+    npc.talkies.say(npc.name, npc.dialogs, {options = npc.options, image = npc.image})
     game_state = INTERACT
   end
 end

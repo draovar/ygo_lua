@@ -11,7 +11,6 @@ function game_load()
     require "npc"
     camera = require "libs/camera";
     cam = camera()
-
     sti = require 'libs/sti'
     gameMap = sti('maps/map2.lua')
     groundLayer     = gameMap.layers["ground"]
@@ -24,6 +23,11 @@ function game_load()
     collisionsLayer = gameMap.layers["collisions"]
     objects = {}
     objects2 = {}
+
+    fonts = {
+        default = love.graphics.newFont(),
+        dialog  = love.graphics.newFont("res/fonts/PixelPurl.ttf", 24)
+    }
 
     NPCs_load()
     
@@ -38,13 +42,15 @@ end
 
 function game_draw()
     love.graphics.clear({0.5, 0.5, 1, 1})
+
     cam:attach()
         gameMap:drawLayer(groundLayer)
         gameMap:drawLayer(decorsLayer)
         draw_background_objs()
         draw_background_objs2()
-        NPCs_draw()
+        NPCs_draw_background()
         player_draw()
+        NPCs_draw_foreground()
         draw_foreground_objs()
         draw_foreground_objs2()
         gameMap:drawLayer(decorsLayer2)
@@ -53,8 +59,9 @@ function game_draw()
     -- npc
     NPCs_interaction()
 
-
     -- debug
+
+    -- love.graphics.setFont(fonts.dialog)
     love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 10, 10)
     love.graphics.print("P_XY: "..tostring(player.x)..", "..tostring(player.y), 10, 30)
     love.graphics.print("P_XY: "..tostring(math.floor((player.x)/TILE_SIZE))..", "..tostring(math.floor((player.y+player.h/4)/TILE_SIZE)), 10, 50)
