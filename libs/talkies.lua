@@ -135,7 +135,7 @@ local Talkies = {
   rounding                = 8,
   thickness               = 0,
   
-  textSpeed               = 1 / 60,
+  textSpeed               = 1 / 30,
   font                    = fonts.dialog,
 
   typedNotTalked          = true,
@@ -168,10 +168,12 @@ function Talkies.say(title, messages, config)
     title         = title or "",
     messages      = msgFifo,
     image         = config.image,
+    quads         = config.quads or nil,
+    spriteNum     = 3,
     options       = config.options,
-    onstart       = config.onstart or function(dialog) end,
+    onstart       = config.onstart or function(dialog) game_state = INTERACT end,
     onmessage     = config.onmessage or function(dialog, left) end,
-    oncomplete    = config.oncomplete or function(dialog) end,
+    oncomplete    = config.oncomplete or function(dialog) game_state = RUNING end,
 
     -- theme
     indicatorCharacter     = config.indicatorCharacter or Talkies.indicatorCharacter,
@@ -188,6 +190,7 @@ function Talkies.say(title, messages, config)
     pitchValues            = config.pitchValues or Talkies.pitchValues,
 
     optionIndex   = 1,
+    currentTime   = 1,
 
     showOptions = function(dialog) return dialog.messages:len() == 1 and type(dialog.options) == "table" end,
     isShown     = function(dialog) return Talkies.dialogs:peek() == dialog end
@@ -226,13 +229,34 @@ function Talkies.update(dt)
   end
 
   if currentMessage:update(dt) then
+    if currentDialog.quads then
+      currentDialog.currentTime = currentDialog.currentTime + dt*4
+      if currentDialog.currentTime >= 4 then currentDialog.currentTime = 1 end
+      currentDialog.spriteNum = math.floor(currentDialog.currentTime)
+    end
     if currentDialog.typedNotTalked then
       playSound(currentDialog.talkSound)
     elseif not currentDialog.talkSound:isPlaying() then
       local pitch = currentDialog.pitchValues[math.random(#currentDialog.pitchValues)]
       playSound(currentDialog.talkSound, pitch)
     end
+  else
+    if currentDialog.quads then
+      if currentDialog.spriteNum == 3 then
+        currentDialog.currentTime = currentDialog.currentTime + dt/4
+      else
+        currentDialog.currentTime = currentDialog.currentTime + dt*4
+      end
+      if currentDialog.currentTime >= 6 then currentDialog.currentTime = 3 end
+      currentDialog.spriteNum = math.floor(currentDialog.currentTime)
+    end
   end
+
+  -- if currentDialog.quads then
+  --   currentDialog.currentTime = currentDialog.currentTime + dt*2
+  --   if currentDialog.currentTime >= #currentDialog.quads + 1 then currentDialog.currentTime = 1 end
+  --   currentDialog.spriteNum = math.floor(currentDialog.currentTime)
+  -- end
 end
 
 function Talkies.advanceMsg()
@@ -287,6 +311,10 @@ function Talkies.draw()
   if currentDialog.image ~= nil then
     imgScale = (boxH - (currentDialog.padding * 2)) / currentDialog.image:getHeight()
     imgW = currentDialog.image:getWidth() * imgScale
+    if currentDialog.quads ~= nil then
+      local x, y, w, h = currentDialog.quads[currentDialog.spriteNum]:getViewport()
+      imgW = w * imgScale
+    end
   end
 
   -- title box
@@ -322,10 +350,17 @@ function Talkies.draw()
 
   -- Message avatar
   if currentDialog.image ~= nil then
-    love.graphics.push()
+    if currentDialog.quads ~= nil then
+      love.graphics.push()
+      love.graphics.setColor(1, 1, 1)
+      love.graphics.draw(currentDialog.image, currentDialog.quads[currentDialog.spriteNum], imgX, imgY, 0, imgScale, imgScale)
+      love.graphics.pop()
+    else
+      love.graphics.push()
       love.graphics.setColor(1, 1, 1)
       love.graphics.draw(currentDialog.image, imgX, imgY, 0, imgScale, imgScale)
-    love.graphics.pop()
+      love.graphics.pop()
+    end
   end
 
   -- Message text

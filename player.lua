@@ -24,6 +24,8 @@ player.state = STATE_IDLE
 player.focus = nil
 player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
 player.outline   = newAnimation(love.graphics.newImage("sprites/yugi_outline.png"), 48, 64, 1/player.s)
+player.talkies = require('../libs/talkies')
+player.image = love.graphics.newImage("sprites/yugi_img.png")
 
 
 function player_update(dt)
@@ -101,12 +103,12 @@ function player_input()
         player.dir = DIR_DOWN
     end
 
-    if love.keyboard.isDown("x") then
-        player.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/player.s)
-    end
-    if love.keyboard.isDown("z") then
-        player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
-    end
+    -- if love.keyboard.isDown("x") then
+    --     player.animation = newAnimation(love.graphics.newImage("sprites/yamiyugi.png"), 48, 64, 1/player.s)
+    -- end
+    -- if love.keyboard.isDown("z") then
+    --     player.animation = newAnimation(love.graphics.newImage("sprites/yugi.png"), 48, 64, 1/player.s)
+    -- end
 end
 
 function player_collision(obj)

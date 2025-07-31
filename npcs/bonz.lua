@@ -10,7 +10,7 @@ npc.w = 48
 npc.h = 64
 npc.talkies = require('../libs/talkies')
 npc.collisions = {}
-npc.image = love.graphics.newImage("sprites/bonz_img.png")
+npc.image = love.graphics.newImage("sprites/bonz_dialog.png")
 
 npc.dialogs = {
     "Hello...",
@@ -18,8 +18,8 @@ npc.dialogs = {
     "Do you want to help me? \n",
 }
 npc.options = {
-    { "Yes", function() npc.talkies.say("Player", "Sure, I'm glad I can help.") game_state = RUNING end },
-    { "No",  function() npc.talkies.say("Player", "No, I can't right now.") game_state = RUNING end },
+    { "Yes", function() player.talkies.say("Player", "Sure, I'm glad I can help.", {image = player.image}) end },
+    { "No",  function() player.talkies.say("Player", "No, I can't right now.", {image = player.image}) end },
 }
 
 npc.animation = newAnimation(love.graphics.newImage("sprites/bonz.png"), 48, 64, 1/2)
@@ -30,6 +30,14 @@ local function load()
     npc.collisions.height = 48
     npc.collisions.x = npc.x - npc.w/2
     npc.collisions.y = npc.y
+
+    npc.quads = {}
+    local imgWidth, imgHeight = npc.image:getWidth(), npc.image:getHeight()
+    local spriteWidth = imgWidth / 5
+
+    for i=0,4 do
+		table.insert(npc.quads, love.graphics.newQuad(i * spriteWidth, 0, spriteWidth, imgHeight, imgWidth, imgHeight))
+	end
 end
 
 local function update(dt)
@@ -48,8 +56,7 @@ end
 
 local function init_dialog()
   if not npc.talkies:isOpen() then
-    npc.talkies.say(npc.name, npc.dialogs, {options = npc.options, image = npc.image})
-    game_state = INTERACT
+    npc.talkies.say(npc.name, npc.dialogs, {options = npc.options, image = npc.image, quads = npc.quads})
   end
 end
 
