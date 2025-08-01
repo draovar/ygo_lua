@@ -78,11 +78,11 @@ function game_update(dt)
 
     -- camera
     cam:lookAt(math.floor(player.x), math.floor(player.y))
-    local w, h = 400, 300
-    cam.x = math.max(cam.x, 0 + w)
-    cam.x = math.min(cam.x, 40*TILE_SIZE - w)
-    cam.y = math.max(cam.y, 0 + h)
-    cam.y = math.min(cam.y, 40*TILE_SIZE - h)
+    local w, h = love.graphics.getDimensions( )
+    cam.x = math.max(cam.x, 0 + w/2)
+    cam.x = math.min(cam.x, 40*TILE_SIZE - w/2)
+    cam.y = math.max(cam.y, 0 + h/2)
+    cam.y = math.min(cam.y, 40*TILE_SIZE - h/2)
 
     if player.x < 0 then
         player.x = 1920
